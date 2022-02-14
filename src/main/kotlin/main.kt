@@ -34,15 +34,13 @@ fun main() {
 
 fun timeToText(seconds: Int): String {
 
-    var textTime: String = ""
-
-    when (seconds) {
-        in 0..60 -> textTime = "только что"
-        in 61..60 * 60 -> textTime = "${countingMinutes(seconds)} ${minToText(seconds)} назад"
-        in 60 * 60 + 1..24 * 60 * 60 -> textTime = "${countingHours(seconds)} ${hourToText(seconds)} назад"
-        in 24 * 60 * 60 + 1..24 * 60 * 60 * 2 -> textTime = "сегодня"
-        in 24 * 60 * 60 * 2 + 1..24 * 60 * 60 * 3 -> textTime = "вчера"
-        else -> textTime = "давно"
+    val textTime: String = when (seconds) {
+        in 0..60 -> "только что"
+        in 61..60 * 60 -> "${countingMinutes(seconds)} ${minToText(seconds)} назад"
+        in 60 * 60 + 1..24 * 60 * 60 -> "${countingHours(seconds)} ${hourToText(seconds)} назад"
+        in 24 * 60 * 60 + 1..24 * 60 * 60 * 2 -> "сегодня"
+        in 24 * 60 * 60 * 2 + 1..24 * 60 * 60 * 3 -> "вчера"
+        else -> "давно"
     }
     return textTime
 }
@@ -58,32 +56,25 @@ fun countingHours(seconds: Int): Int {
 }
 
 fun minToText(seconds: Int): String {
-    var text: String = ""
 
     val minutes = countingMinutes(seconds)
 
-    if (minutes % 10 == 1 && minutes % 100 != 11) {
-        text = "минута"
-    } else if ((minutes % 10 == 2 || minutes % 10 == 3 || minutes % 10 == 4) && minutes % 100 != 12 && minutes % 100 != 13 && minutes % 100 != 14) {
-        text = "минуты"
-    } else {
-        text = "минут"
+    val text: String = when {
+        (minutes % 10 == 1 && minutes % 100 != 11) -> "минута"
+        ((minutes % 10 == 2 || minutes % 10 == 3 || minutes % 10 == 4) && minutes % 100 != 12 && minutes % 100 != 13 && minutes % 100 != 14) -> "минуты"
+        else -> "минут"
     }
-
     return text
 }
 
 fun hourToText(seconds: Int): String {
-    var text: String = ""
 
     val hours = countingHours(seconds)
 
-    if (hours % 10 == 1 && hours % 100 != 11) {
-        text = "час"
-    } else if ((hours % 10 == 2 || hours % 10 == 3 || hours % 10 == 4) && hours % 100 != 12 && hours % 100 != 13 && hours % 100 != 14) {
-        text = "часа"
-    } else {
-        text = "часов"
+    val text: String = when {
+        (hours % 10 == 1 && hours % 100 != 11) -> "час"
+        ((hours % 10 == 2 || hours % 10 == 3 || hours % 10 == 4) && hours % 100 != 12 && hours % 100 != 13 && hours % 100 != 14) -> "часа"
+        else -> "часов"
     }
 
     return text
